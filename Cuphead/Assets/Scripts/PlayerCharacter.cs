@@ -14,23 +14,26 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //Fires when Fire1 button is pressed or held down
-     if((Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.LeftControl)) && Time.time > nextFire)
+        if ((Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.LeftControl)) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             fire();
-        }  
-     if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) { //uses last movement command
-            if (Input.GetKeyDown(KeyCode.A))
+        }
+        float horizontalAxis = Input.GetAxisRaw("Horizontal");
+        if (horizontalAxis != 0)
+        {
+            if (horizontalAxis < 0)
             {
                 facingRight = false;
-            } else
+            }
+            else
             {
                 facingRight = true;
             }
@@ -49,15 +52,18 @@ public class PlayerCharacter : MonoBehaviour
 
     void fire()
     {
-        if(facingRight){
+        if (facingRight)
+        {
             bulletPos = transform.position;
             bulletPos += new Vector2(+3f, 0);
             Instantiate(bulletRight, bulletPos, Quaternion.Euler(0, 0, -90));
-        } else {
+        }
+        else
+        {
             bulletPos = transform.position;
             bulletPos += new Vector2(-3f, 0);
             Instantiate(bulletLeft, bulletPos, Quaternion.Euler(0, 0, 90));
-     
+
         }
     }
 }
