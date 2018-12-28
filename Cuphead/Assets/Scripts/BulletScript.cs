@@ -5,19 +5,19 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
 
-    public float velX = 20f;
-    float velY = 0f;
-    Rigidbody2D rb;
+    [SerializeField] float velX = 0f;
+    [SerializeField] float velY = 0f;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, 1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(velX, velY);
+        transform.Translate(Vector3.up * Time.deltaTime * velX); //X axis
+        transform.Translate(Vector3.right * Time.deltaTime * velY); //Y axis
         Destroy(gameObject, 1f);
     }
 }

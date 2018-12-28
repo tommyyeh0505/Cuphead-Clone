@@ -13,7 +13,7 @@ public class WallBulletCollision : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("collision name = " + col.gameObject.name);
-        if (col.gameObject.name == "BulletLeft(Clone)" || col.gameObject.name == "BulletRight(Clone)")
+        if (col.gameObject.name == "Bullet")
         {
             Destroy(col.gameObject);
         }

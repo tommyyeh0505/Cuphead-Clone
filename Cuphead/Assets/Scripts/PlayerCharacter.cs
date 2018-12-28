@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour
 {
 
-    public GameObject bulletRight;
-    public GameObject bulletLeft;
+    public GameObject bullet;
     Vector2 bulletPos;
     public float fireRate = 0.5f;
     public float nextFire = 0.0f;
@@ -56,13 +55,13 @@ public class PlayerCharacter : MonoBehaviour
         {
             bulletPos = transform.position;
             bulletPos += new Vector2(+3f, 0);
-            Instantiate(bulletRight, bulletPos, Quaternion.Euler(0, 0, -90));
+            Instantiate(bullet, bulletPos, Quaternion.Euler(0, 0, -90));
         }
         else
         {
             bulletPos = transform.position;
             bulletPos += new Vector2(-3f, 0);
-            Instantiate(bulletLeft, bulletPos, Quaternion.Euler(0, 0, 90));
+            Instantiate(bullet, bulletPos, Quaternion.Euler(0, 0, 90));
 
         }
     }
