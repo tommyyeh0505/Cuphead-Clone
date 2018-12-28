@@ -712,6 +712,9 @@ GameObject:
   - component: {fileID: 1042038619}
   - component: {fileID: 1042038618}
   - component: {fileID: 1042038620}
+  - component: {fileID: 1042038623}
+  - component: {fileID: 1042038622}
+  - component: {fileID: 1042038621}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -796,6 +799,57 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   bullet: {fileID: 2753210092516337661, guid: c95fbba5f64a763469dc4082217aa5d9, type: 3}
   bossRadius: 7
+--- !u!114 &1042038621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042038617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b7a544ccc9d6b429051c4032c8dcc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5000
+  timeToDespawn: 0
+--- !u!50 &1042038622
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042038617}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &1042038623
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042038617}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 19.194998
 --- !u!1001 &2429922061206014960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -887,6 +941,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3215241072356695237, guid: 08241ad126f858841b00fdcfe0f24f8c,
         type: 3}
       propertyPath: m_Name
@@ -951,10 +1009,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.x
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_BodyType
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
