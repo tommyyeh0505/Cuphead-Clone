@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-
-    [SerializeField] float velX = 0f;
-    [SerializeField] float velY = 0f;
+    [SerializeField] private float velX = 0f;
+    [SerializeField] private float velY = 0f;
     // Start is called before the first frame update
     void Start()
     {

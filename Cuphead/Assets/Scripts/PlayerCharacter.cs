@@ -43,18 +43,8 @@ public class PlayerCharacter : MonoBehaviour
 
     void fire()
     {
-        if (facingRight)
-        {
-            bulletPos = transform.position;
-            bulletPos += new Vector2(+3f, 0);
-            Instantiate(bullet, bulletPos, Quaternion.Euler(0, 0, -90));
-        }
-        else
-        {
-            bulletPos = transform.position;
-            bulletPos += new Vector2(-3f, 0);
-            Instantiate(bullet, bulletPos, Quaternion.Euler(0, 0, 90));
-
-        }
+        bulletPos = transform.position;
+        bulletPos += new Vector2((facingRight ? 1f : -1f) * 3f, 0);
+        Instantiate(bullet, bulletPos, Quaternion.Euler(0f, 0f, 90f * (facingRight ? -1f : 1f)));
     }
 }
