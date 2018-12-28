@@ -23,6 +23,7 @@ public class PlayerMovementComponent : MonoBehaviour
 
     private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider;
+    private Animator animator;
 
     public LayerMask environmentLayer;
 
@@ -31,7 +32,9 @@ public class PlayerMovementComponent : MonoBehaviour
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
         hasJumped = false;
+        animator.SetBool("animJumpBool", hasJumped);
         currentJumpDuration = 0;
         verticalSpeed = 0;
 
@@ -55,11 +58,15 @@ public class PlayerMovementComponent : MonoBehaviour
             currentJumpDuration = 0f;
             verticalSpeed = initialVerticalSpeed;
             hasJumped = true;
+            animator.SetBool("animJumpBool", hasJumped);
+            animator.ResetTrigger("animFall");
         }
         else if (!JumpHeld || !hasJumped || currentJumpDuration > jumpMaxDuration + jumpLingerTime) // situation 2
         {
             // if we get in situation 2, we can never get out until we hit ground           
+            animator.SetTrigger("animFall");
             hasJumped = false;
+            animator.SetBool("animJumpBool", hasJumped);
             // We use a parabolic curve to model the fall. Note that we linger with the sin curve for a little bit before falling
             verticalSpeed = Mathf.Min(verticalSpeed - (gravity * Time.deltaTime), -initialVerticalSpeed);
         }
@@ -84,6 +91,7 @@ public class PlayerMovementComponent : MonoBehaviour
         if (hit.transform == null)
         {
             grounded = false;
+            animator.ResetTrigger("animGround");
             return new Vector2(CurrentVector.x, CurrentVector.y + distance);
         }
         else
@@ -94,6 +102,9 @@ public class PlayerMovementComponent : MonoBehaviour
 
             if (!goingUp) // we have hit a floor
             {
+                animator.SetTrigger("animGround");
+                animator.ResetTrigger("animFall");
+
                 verticalSpeed = 0f;
                 grounded = true;
             }
