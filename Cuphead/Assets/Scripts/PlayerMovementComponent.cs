@@ -21,7 +21,6 @@ public class PlayerMovementComponent : MonoBehaviour
     [HideInInspector] private float jumpSinWavePeriod;
     [HideInInspector] private float initialVerticalSpeed;
 
-    private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider;
     private Animator animator;
 
@@ -30,7 +29,6 @@ public class PlayerMovementComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         hasJumped = false;
@@ -151,6 +149,6 @@ public class PlayerMovementComponent : MonoBehaviour
 
         NewPosition = ApplyVerticalMovement(jumpButtionDown, jumpButtionHeld, NewPosition);
 
-        rigidBody2D.MovePosition(NewPosition);
+        transform.position = NewPosition;
     }
 }
