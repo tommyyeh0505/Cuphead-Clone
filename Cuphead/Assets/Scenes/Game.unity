@@ -875,10 +875,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 20
-  initialJumpSpeed: 40
+  jumpMaxHeight: 12
   jumpMaxDuration: 0.5
+  jumpLingerTime: 0.2
   gravity: 30
-  initialFallSpeed: 40
   environmentLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289a13acde9d35045a08149b466f9163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
+  bullet: {fileID: 420946309558645148, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c, type: 3}
   fireRate: 0.3
   nextFire: 0
 --- !u!95 &1891285362
