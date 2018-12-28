@@ -7,10 +7,11 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject bullet;
     Vector2 bulletPos;
     public float fireRate = 0.5f;
-    public float nextFire = 0.0f;
-    bool facingRight = true;
 
+    private float nextFire = 0.0f;
+    private bool facingRight;
     private PlayerMovementComponent movementComponent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +21,14 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        facingRight = movementComponent.isFacingRight;
+
         //Fires when Fire1 button is pressed or held down
         if ((Input.GetButtonDown("Fire1") || Input.GetButton("Fire1") && Time.time > nextFire))
         {
             nextFire = Time.time + fireRate;
             fire();
         }
-
-        facingRight = movementComponent.isFacingRight;
     }
 
     void OnCollisionEnter2D(Collision2D col)

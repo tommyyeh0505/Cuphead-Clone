@@ -10,7 +10,7 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
     }
 
     // Update is called once per frame
@@ -18,6 +18,5 @@ public class BulletScript : MonoBehaviour
     {
         transform.Translate(Vector3.up * Time.deltaTime * velX); //X axis
         transform.Translate(Vector3.right * Time.deltaTime * velY); //Y axis
-        Destroy(gameObject, 1f);
     }
 }
