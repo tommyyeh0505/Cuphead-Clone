@@ -4,39 +4,30 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-
     public GameObject bullet;
     Vector2 bulletPos;
     public float fireRate = 0.5f;
     public float nextFire = 0.0f;
     bool facingRight = true;
+
+    private PlayerMovementComponent movementComponent;
     // Start is called before the first frame update
     void Start()
     {
-
+        movementComponent = gameObject.GetComponent<PlayerMovementComponent>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Fires when Fire1 button is pressed or held down
-        if ((Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.LeftControl)) && Time.time > nextFire)
+        if ((Input.GetButtonDown("Fire1") || Input.GetButton("Fire1") && Time.time > nextFire))
         {
             nextFire = Time.time + fireRate;
             fire();
         }
-        float horizontalAxis = Input.GetAxisRaw("Horizontal");
-        if (horizontalAxis != 0)
-        {
-            if (horizontalAxis < 0)
-            {
-                facingRight = false;
-            }
-            else
-            {
-                facingRight = true;
-            }
-        }
+
+        facingRight = movementComponent.isFacingRight;
     }
 
     void OnCollisionEnter2D(Collision2D col)
