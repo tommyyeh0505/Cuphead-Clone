@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealthComponent : Damagable
 {
     float hitFlashTime = 1f;
     int hitFlashAmount = 4;
     bool gettingHit = false;
+    [SerializeField] private TMP_Text UIHealthText;
+
+    private void Start()
+    {
+        UIHealthText.text = health.ToString("R");
+    }
 
     public override void OnHit(float damage)
     {
         base.OnHit(damage);
-
+        UIHealthText.text = health.ToString("R");
         if (gettingHit)
         {
             StopCoroutine("HitFlash");
