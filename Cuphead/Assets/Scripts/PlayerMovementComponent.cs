@@ -5,15 +5,17 @@ using UnityEngine;
 public class PlayerMovementComponent : MonoBehaviour
 {
     public float moveSpeed;
-    public float initialJumpSpeed;
+    public float jumpMaxHeight;
     public float jumpMaxDuration;
+    public float jumpLingerTime;
     public float gravity;
-    public float initialFallSpeed;
 
     [HideInInspector] private bool hasJumped;
     [HideInInspector] private float verticalSpeed;
     [HideInInspector] private float currentJumpDuration;
     [HideInInspector] private bool grounded;
+    [HideInInspector] private float jumpSinWavePeriod;
+    [HideInInspector] private float initialVerticalSpeed;
 
     private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider;
@@ -28,6 +30,9 @@ public class PlayerMovementComponent : MonoBehaviour
         hasJumped = false;
         currentJumpDuration = 0;
         verticalSpeed = 0;
+
+        jumpSinWavePeriod = Mathf.PI / (2 * jumpMaxDuration);
+        initialVerticalSpeed = jumpSinWavePeriod * jumpMaxHeight;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -42,20 +47,20 @@ public class PlayerMovementComponent : MonoBehaviour
         // 3. We are gaining altitude / lingering in the air after the apex of our jump, because jump button is held
         if (grounded && JumpDown) // situation 1
         {
-            verticalSpeed = initialJumpSpeed;
             currentJumpDuration = 0f;
+            verticalSpeed = initialVerticalSpeed;
             hasJumped = true;
         }
-        else if (!JumpHeld || !hasJumped || currentJumpDuration > jumpMaxDuration) // situation 2
+        else if (!JumpHeld || !hasJumped || currentJumpDuration > jumpMaxDuration + jumpLingerTime) // situation 2
         {
             // if we get in situation 2, we can never get out until we hit ground
             hasJumped = false;
-            verticalSpeed = Mathf.Min(verticalSpeed - (gravity * Time.deltaTime), -initialFallSpeed);
+            verticalSpeed = Mathf.Min(verticalSpeed - (gravity * Time.deltaTime), -initialVerticalSpeed);
         }
         else // situation 3
         {
             currentJumpDuration += Time.deltaTime;
-            verticalSpeed = initialJumpSpeed;
+            verticalSpeed = initialVerticalSpeed * Mathf.Cos(jumpSinWavePeriod * currentJumpDuration);
         }
 
         return verticalSpeed;
@@ -63,8 +68,8 @@ public class PlayerMovementComponent : MonoBehaviour
 
     Vector2 ApplyVerticalMovement(bool JumpPressed, bool JumpHeld, Vector2 CurrentVector)
     {
-        CalculateVerticalSpeed(JumpPressed, JumpHeld);
-        float distance = verticalSpeed * Time.deltaTime;
+        float speed = CalculateVerticalSpeed(JumpPressed, JumpHeld);
+        float distance = speed * Time.deltaTime;
 
         Bounds bounds = boxCollider.bounds;
         RaycastHit2D hit = Physics2D.BoxCast(CurrentVector, bounds.size, 0f, new Vector2(0f, 1f), distance, environmentLayer);
@@ -78,10 +83,10 @@ public class PlayerMovementComponent : MonoBehaviour
         {
             bool goingUp = distance > float.Epsilon;
             float toMoveToEdge = (goingUp ? 1 : -1) * (hit.distance - 0.01f);
+            hasJumped = false;
 
             if (!goingUp) // we have hit a floor
             {
-                hasJumped = false;
                 verticalSpeed = 0f;
                 grounded = true;
             }
