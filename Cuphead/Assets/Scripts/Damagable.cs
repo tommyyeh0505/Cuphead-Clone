@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Damagable : MonoBehaviour
 {
-    [SerializeField] float health;
-    [SerializeField] float timeToDespawn;
+    [SerializeField] protected float health;
+    [SerializeField] protected float timeToDespawn;
 
     // Start is called before the first frame update
     void Start()

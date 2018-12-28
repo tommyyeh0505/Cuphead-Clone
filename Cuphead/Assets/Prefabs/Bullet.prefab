@@ -124,6 +124,8 @@ MonoBehaviour:
   velX: 60
   velY: 0
   timeToDestroy: 2
+  canHurtEnemy: 1
+  canHurtPlayer: 0
 --- !u!50 &584011547284015
 Rigidbody2D:
   serializedVersion: 4

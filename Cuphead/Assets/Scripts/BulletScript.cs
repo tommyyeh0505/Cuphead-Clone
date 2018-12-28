@@ -8,6 +8,8 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private float velX = 0f;
     [SerializeField] private float velY = 0f;
     public float timeToDestroy = 2f;
+    public bool canHurtEnemy = true;
+    public bool canHurtPlayer = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,16 @@ public class BulletScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "projectile")
+        {
+            return;
+        }
+
+        if (!canHurtEnemy && collider.tag == "enemy")
+        {
+            return;
+        }
+
+        if (!canHurtPlayer && collider.tag == "Player")
         {
             return;
         }

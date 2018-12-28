@@ -8,6 +8,11 @@ public class BossHealthComponent : Damagable
     float damageFlashWaitTime = 0.3f;
     bool gettingHit = false;
 
+    public bool ShouldAttack()
+    {
+        return health > float.Epsilon;
+    }
+
     public override void OnHit(float damage)
     {
         base.OnHit(damage);
