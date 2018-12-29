@@ -544,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402370529}
   - component: {fileID: 402370528}
+  - component: {fileID: 402370530}
   m_Layer: 0
   m_Name: LevelBg
   m_TagString: Untagged
@@ -613,43 +614,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &684726764 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3215241072356695237, guid: 08241ad126f858841b00fdcfe0f24f8c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3215241071024645550}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &684726765
-MonoBehaviour:
+--- !u!95 &402370530
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684726764}
+  m_GameObject: {fileID: 402370527}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d65c8948f70e15441ba90e13f4f9c087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  timeToDespawn: 0
-  UIHealthText: {fileID: 1979281026}
---- !u!114 &684726772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684726764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf03315b6b71c340aea4291a562bb8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 420946309558645148, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c, type: 3}
-  fireRate: 0.2
-  upDeadZone: 0.4
-  distanceAwayToSpawnProjectile: 3
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d971827339bb5b4ca05e311d3acc12c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &695743085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,19 +2086,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3215241072356695237, guid: 08241ad126f858841b00fdcfe0f24f8c,
         type: 3}
       propertyPath: m_Name
       value: Cuphead
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215241072356695237, guid: 08241ad126f858841b00fdcfe0f24f8c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3215241072356695232, guid: 08241ad126f858841b00fdcfe0f24f8c,
         type: 3}
@@ -2172,41 +2146,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3215241072356695234, guid: 08241ad126f858841b00fdcfe0f24f8c,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: gravity
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: jumpMaxDuration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: jumpMaxHeight
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285361, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: firingModes.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285361, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: fireRate
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285361, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: firingModes.Array.data[0]
+    - target: {fileID: 684726765, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
+      propertyPath: UIHealthText
       value: 
-      objectReference: {fileID: 420946309558645148, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
-        type: 3}
-    - target: {fileID: 1891285361, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: firingModes.Array.data[1]
-      value: 
-      objectReference: {fileID: 2264256154275215651, guid: c95fbba5f64a763469dc4082217aa5d9,
-        type: 3}
+      objectReference: {fileID: 1979281026}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
 --- !u!1001 &7470755117017394675
@@ -2275,11 +2218,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7470755116180361903, guid: dd9d07a9967d8594284f4944e66bf2fa,
-        type: 3}
-      propertyPath: attackCooldownTime
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9d07a9967d8594284f4944e66bf2fa, type: 3}

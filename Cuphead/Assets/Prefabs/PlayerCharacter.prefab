@@ -14,9 +14,11 @@ GameObject:
   - component: {fileID: 1891285362}
   - component: {fileID: 1891285360}
   - component: {fileID: 1891285361}
+  - component: {fileID: 684726765}
+  - component: {fileID: 684726772}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +109,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22845313, y: 0.33979374}
+  m_Size: {x: 0.2, y: 0.33979374}
   m_EdgeRadius: 0
 --- !u!95 &1891285362
 Animator:
@@ -141,10 +143,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 20
-  jumpMaxHeight: 12
+  jumpMaxHeight: 10
   jumpMaxDuration: 0.5
   jumpLingerTime: 0.2
-  gravity: 50
+  gravity: 10
   controllerDeadzone: 0.4
   isFacingRight: 0
   environmentLayer:
@@ -162,5 +164,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289a13acde9d35045a08149b466f9163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firingModes: []
+--- !u!114 &684726765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3215241072356695237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65c8948f70e15441ba90e13f4f9c087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  timeToDespawn: 0
+  UIHealthText: {fileID: 0}
+--- !u!114 &684726772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3215241072356695237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf03315b6b71c340aea4291a562bb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   bullet: {fileID: 420946309558645148, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c, type: 3}
-  fireRate: 0.1
+  fireRate: 0.2
+  upDeadZone: 0.4
+  distanceAwayToSpawnProjectile: 3
