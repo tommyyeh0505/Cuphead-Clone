@@ -90,7 +90,7 @@ PrefabInstance:
     - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}
       propertyPath: velX
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}

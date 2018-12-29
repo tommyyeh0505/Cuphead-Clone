@@ -38,14 +38,14 @@ public class MysqlConnector : MonoBehaviour
             while (rdr.Read())
             {
                 //Debug.Log(rdr[0] + " -- " + rdr[1] + " -- " + rdr[2] + " -- " + rdr[3]);
-                s += rdr[0] + " -- " + rdr[1] + " -- " + rdr[2] + " -- " + rdr[3] + "\n"; //Temporary
+                s += rdr[0] + " -- " + rdr[1] + " -- " + rdr[2] + "\n"; //Temporary
             }
             leaderboardtext.text = s;
             rdr.Close();
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+           Debug.Log(ex.ToString());
         }
         finally
         {

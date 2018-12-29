@@ -36,6 +36,7 @@ public class GameLifecycleComponent : MonoBehaviour
                 gameOver = true;
                 gameOverTime.text = time.text;
                 gameOverUI.SetActive(true);
+                gameObject.GetComponent<GameOver>().SetHighScore(levelTime);
             }
             else
             {

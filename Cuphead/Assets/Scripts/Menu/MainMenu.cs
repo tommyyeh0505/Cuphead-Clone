@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
    public void PlayGame()
     {
+        PlayerPrefs.SetInt("CURRENTLEVELID", 0); //TODO, currently does not change with level selection
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void QuitGame()
