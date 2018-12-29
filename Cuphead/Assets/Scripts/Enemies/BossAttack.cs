@@ -6,7 +6,26 @@ public abstract class BossAttack : MonoBehaviour
 {
     [SerializeField] public int[] phases = { 0 };
 
-    public abstract IEnumerator Attack();
+    public virtual IEnumerator Attack()
+    {
+        yield return MoveToAttack();
+        yield return TelegraphAttack();
+        yield return DoAttack();
+    }
+
+    protected virtual IEnumerator MoveToAttack()
+    {
+        yield return null;
+    }
+
+    protected virtual IEnumerator TelegraphAttack()
+    {
+        yield return null;
+    }
+
+    protected abstract IEnumerator DoAttack();
+
+
 
     static protected void ShootCircleOfProjectiles(BulletScript bullet, Vector3 origin, float principleAngle, float angleBetweenShots, float radius = 0f)
     {

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BossAttackManager: MonoBehaviour
 {
-    public float attackCooldownTime = 4f;
-
     private Dictionary<int, List<BossAttack>> attacks = new Dictionary<int, List<BossAttack>>();
 
     private void Start()
