@@ -123,10 +123,12 @@ public class PlayerMovementComponent : MonoBehaviour
 
         if (hit.transform == null)
         {
+            animator.SetBool("animWalking", true);
             return new Vector2(CurrentVector.x + distance, CurrentVector.y);
         }
         else
         {
+            animator.SetBool("animWalking", false);     
             bool toRight = distance > float.Epsilon;
             float toMoveToEdge = (toRight ? 1 : -1) * (hit.distance - 0.01f);
             return new Vector2(CurrentVector.x + toMoveToEdge, CurrentVector.y);
@@ -142,6 +144,10 @@ public class PlayerMovementComponent : MonoBehaviour
         if (Mathf.Abs(horizontalAxis) > controllerDeadzone)
         {
             NewPosition = ApplyHorizontalMovement(Mathf.Sign(horizontalAxis), NewPosition);
+        }
+        else
+        {
+            animator.SetBool("animWalking", false);
         }
 
         bool jumpButtionDown = Input.GetButtonDown("Jump");

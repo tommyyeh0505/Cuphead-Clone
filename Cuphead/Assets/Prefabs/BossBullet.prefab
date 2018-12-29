@@ -70,32 +70,12 @@ PrefabInstance:
     - target: {fileID: 397913004475047552, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 397913004475047552, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
-        type: 3}
-      propertyPath: velX
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
-        type: 3}
-      propertyPath: timeToDestroy
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
-        type: 3}
-      propertyPath: canHurtEnemy
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
-        type: 3}
-      propertyPath: canHurtPlayer
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5391816559207715200, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}
@@ -105,6 +85,26 @@ PrefabInstance:
     - target: {fileID: 5391816559207715200, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
         type: 3}
       propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
+        type: 3}
+      propertyPath: velX
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
+        type: 3}
+      propertyPath: timeToDestroy
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
+        type: 3}
+      propertyPath: canHurtEnemy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363598210688954178, guid: d2b7c43fe1aa8b5489a506ddca2a7e5c,
+        type: 3}
+      propertyPath: canHurtPlayer
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

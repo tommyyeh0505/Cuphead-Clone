@@ -9,14 +9,14 @@ public class Boss : MonoBehaviour
 
     private bool scriptStarted = false;
     private BossMovement movement;
-    private BossAttack attack;
+    private BossAttackManager attack;
     private BossHealthComponent health;
 
     // Start is called before the first frame update
     void Start()
     {
         movement = gameObject.GetComponent<BossMovement>();
-        attack = GetComponent<BossAttack>();
+        attack = GetComponent<BossAttackManager>();
         health = GetComponent<BossHealthComponent>();
     }
 
@@ -24,19 +24,17 @@ public class Boss : MonoBehaviour
     {
         if (!scriptStarted)
         {
-            StartCoroutine("BossScript");
+            StartCoroutine(BossScript());
             scriptStarted = true;
         }
     }
 
     IEnumerator BossScript()
     {
-        movement.StartBobbing();
-
         while (health.ShouldAttack())
         {
-            float waitTime = attack.Attack();
-            yield return new WaitForSeconds(waitTime + Random.Range(minRotationTime, maxRotationTime));
+            yield return StartCoroutine(attack.Attack(health.phase));
+            yield return new WaitForSeconds(Random.Range(minRotationTime, maxRotationTime));
         }
     }
 }

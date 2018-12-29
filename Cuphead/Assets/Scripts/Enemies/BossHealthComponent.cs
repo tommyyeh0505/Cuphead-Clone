@@ -8,6 +8,21 @@ public class BossHealthComponent : Damagable
     float damageFlashWaitTime = 0.3f;
     bool gettingHit = false;
 
+    [HideInInspector] public int phase;
+    public List<float> phaseThresholds = new List<float>();
+    private float maxHealth;
+
+    private void Start()
+    {
+        if (phaseThresholds.Count == 0)
+        {
+            phaseThresholds.Add(0f);
+        }
+
+        phaseThresholds.Sort();
+        maxHealth = health;
+    }
+
     public bool ShouldAttack()
     {
         return health > float.Epsilon;
@@ -16,6 +31,15 @@ public class BossHealthComponent : Damagable
     public override void OnHit(float damage)
     {
         base.OnHit(damage);
+
+        for (int i = 0; i < phaseThresholds.Count; ++i)
+        {
+            if ((health / maxHealth) < phaseThresholds[i])
+            {
+                phase = phaseThresholds.Count - i;
+                break;
+            }
+        }
 
         if (!gettingHit)
         {

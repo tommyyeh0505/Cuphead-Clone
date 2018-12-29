@@ -2,70 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossAttack : MonoBehaviour
+public abstract class BossAttack : MonoBehaviour
 {
-    public float attackCooldownTime = 4f;
-    public BulletScript bullet;
-    public float bossRadius = 2.5f;
+    [SerializeField] public int[] phases = { 0 };
 
-    private bool fireAgain = true;
-    private float angle = 0f;
-    private float angleBetweenShots = 30f;
+    public abstract IEnumerator Attack();
 
-    private List<IEnumerator> attacks;
-
-    private void Start()
+    static protected void ShootCircleOfProjectiles(BulletScript bullet, Vector3 origin, float principleAngle, float angleBetweenShots, float radius = 0f)
     {
-        attacks = new List<IEnumerator>();
-        attacks.Add(Attack1());
-        attacks.Add(Attack2());
-    }
+        float originalAngle = principleAngle;
 
-    public float Attack()
-    {
-        StopAllCoroutines();
-        StartCoroutine("Attack1");
-//        StartCoroutine(attacks[Random.Range(0, attacks.Count)]);
-        return attackCooldownTime;
-    }
-
-    IEnumerator Attack1()
-    {
-        float shotAngle = angle;
-
-        while (shotAngle <= angle + 360f)
+        while (principleAngle <= originalAngle + 360f)
         {
-            Vector3 dir = new Vector2(Mathf.Sin(shotAngle * Mathf.Deg2Rad), Mathf.Cos(shotAngle * Mathf.Deg2Rad));
-            Instantiate(bullet, transform.position + dir * bossRadius, Quaternion.Euler(0f, 0f, -shotAngle));
+            Vector3 dir = new Vector2(Mathf.Sin(principleAngle * Mathf.Deg2Rad), Mathf.Cos(principleAngle * Mathf.Deg2Rad));
+            Instantiate(bullet, origin + dir * radius, Quaternion.Euler(0f, 0f, -principleAngle));
 
-            shotAngle += angleBetweenShots;
+            principleAngle += angleBetweenShots;
         }
-
-        angle += 15f;
-        yield return null;  
-    }
-
-    IEnumerator Attack2()
-    {
-        float shotAngle = angle;
-        while (shotAngle <= angle + 360f)
-        {
-            Vector3 dir = new Vector2(Mathf.Sin(shotAngle * Mathf.Deg2Rad), Mathf.Cos(shotAngle * Mathf.Deg2Rad));
-            Instantiate(bullet, transform.position + dir * bossRadius, Quaternion.Euler(0f, 0f, -shotAngle));
-
-            shotAngle += angleBetweenShots;
-        }
-
-        angle += 15f;
-        if (fireAgain)
-        {
-            fireAgain = false;
-            yield return new WaitForSeconds(0.5f);
-        }
-        else
-        {
-            fireAgain = true;
-            yield return null;
-        }       
     }
 }

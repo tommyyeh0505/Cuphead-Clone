@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 7470755116180361902}
   - component: {fileID: 1490413525}
   - component: {fileID: 6427147908806144887}
+  - component: {fileID: 3990400492068136566}
+  - component: {fileID: 9148305909003476206}
   m_Layer: 0
   m_Name: Boss
   m_TagString: enemy
@@ -135,8 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldownTime: 1
-  bullet: {fileID: 2753210092516337661, guid: c95fbba5f64a763469dc4082217aa5d9, type: 3}
-  bossRadius: 3
 --- !u!114 &7470755116180361902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3000
   timeToDespawn: 0
+  phase: 0
+  phaseThresholds: []
 --- !u!114 &1490413525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,5 +181,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e089ce70896b3f4e9356494cc19c10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRotationTime: 0
-  maxRotationTime: 0
+  minRotationTime: 1
+  maxRotationTime: 2
+--- !u!114 &3990400492068136566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470755116180361898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf0c339032dfef47b09a8edfd5eba06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phases: 00000000
+  bullet: {fileID: 2753210092516337661, guid: c95fbba5f64a763469dc4082217aa5d9, type: 3}
+  angleBetweenShots: 60
+  fireTimes: 1
+  timeBetweenCircles: 0.5
+--- !u!114 &9148305909003476206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470755116180361898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf0c339032dfef47b09a8edfd5eba06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phases: 00000000
+  bullet: {fileID: 2753210092516337661, guid: c95fbba5f64a763469dc4082217aa5d9, type: 3}
+  angleBetweenShots: 60
+  fireTimes: 2
+  timeBetweenCircles: 0.5
