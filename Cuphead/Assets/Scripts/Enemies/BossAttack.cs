@@ -25,8 +25,6 @@ public abstract class BossAttack : MonoBehaviour
 
     protected abstract IEnumerator DoAttack();
 
-
-
     static protected void ShootCircleOfProjectiles(BulletScript bullet, Vector3 origin, float principleAngle, float angleBetweenShots, float radius = 0f)
     {
         float originalAngle = principleAngle;

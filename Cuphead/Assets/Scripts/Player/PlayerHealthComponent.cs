@@ -11,19 +11,23 @@ public class PlayerHealthComponent : Damagable
     bool gettingHit = false;
     [SerializeField] private TMP_Text UIHealthText;
 
+    private PlayerMovementComponent movement;
+
     private void Start()
     {
+        movement = GetComponent<PlayerMovementComponent>();
         UIHealthText.text = health.ToString("R");
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit(float damage, Vector2 direction)
     {
         if (!gettingHit)
         {
-            base.OnHit(damage);
+            base.OnHit(damage, direction);
             UIHealthText.text = health.ToString("R");
 
             StartCoroutine("HitFlash");
+            movement.Knockback(direction);
         }
     }
 

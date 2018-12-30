@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletScript : DamageVolume
 {
-    [SerializeField] float damage = 10f;
     [SerializeField] private float velX = 0f;
     [SerializeField] private float velY = 0f;
     public float timeToDestroy = 2f;
-    public bool canHurtEnemy = true;
-    public bool canHurtPlayer = true;
 
     // Start is called before the first frame update
     void Start()
@@ -17,30 +14,14 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject, timeToDestroy);
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    protected override bool ApplyDamage(Collider2D collider)
     {
-        if (collider.tag == "projectile")
+        if (base.ApplyDamage(collider))
         {
-            return;
+            Destroy(gameObject);
+            return true;
         }
-
-        if (!canHurtEnemy && collider.tag == "enemy")
-        {
-            return;
-        }
-
-        if (!canHurtPlayer && collider.tag == "Player")
-        {
-            return;
-        }
-
-        Damagable dmgComponent = collider.GetComponent<Damagable>();
-        if (dmgComponent)
-        {
-            dmgComponent.OnHit(damage);
-        }
-
-        Destroy(gameObject);
+        return false;
     }
 
     // Update is called once per frame

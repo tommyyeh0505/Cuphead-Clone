@@ -15,8 +15,11 @@ public class PlayerMovementComponent : MonoBehaviour
 
     public float controllerDeadzone;
 
-    [HideInInspector] public bool isFacingRight;
+    public float knockbackSpeed = 15f;
+    public float knockbackHeight = 0.5f;
+    public float knockbackTime = 0.2f;
 
+    [HideInInspector] public bool isFacingRight;
     [HideInInspector] private bool hasJumped;
     [HideInInspector] private float verticalSpeed;
     [HideInInspector] private float currentJumpDuration;
@@ -24,6 +27,8 @@ public class PlayerMovementComponent : MonoBehaviour
     [HideInInspector] private float jumpSinWavePeriod;
     [HideInInspector] private float initialVerticalSpeed;
     private float lastPressJumpTime;
+    private Vector2 knockbackDirection;
+    private float knockBackTimeRemaining = 0f;
 
     private BoxCollider2D boxCollider;
     private Animator animator;
@@ -45,8 +50,23 @@ public class PlayerMovementComponent : MonoBehaviour
         initialVerticalSpeed = jumpSinWavePeriod * jumpMaxHeight;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Knockback(Vector2 direction)
     {
+        knockBackTimeRemaining = knockbackTime;
+
+        Vector2 endLocation = direction * knockbackSpeed * knockbackTime;
+        endLocation.y = Mathf.Max(endLocation.y + knockbackHeight, knockbackHeight);
+        knockbackDirection = endLocation.normalized;
+    }
+
+    Vector2 UpdateKnockback(Vector2 CurrentVector)
+    {
+        knockBackTimeRemaining = Mathf.Max(0, knockBackTimeRemaining - Time.deltaTime);
+        Vector2 knockbackVel = knockbackDirection * knockbackSpeed;
+        Vector2 outPosition = ApplyHorizontalVelocity(knockbackVel.x, CurrentVector);
+        outPosition = ApplyVerticalVelocity(knockbackVel.y, outPosition);
+
+        return outPosition;
     }
 
     float CalculateVerticalSpeed(bool JumpDown, bool JumpHeld)
@@ -88,10 +108,9 @@ public class PlayerMovementComponent : MonoBehaviour
         return verticalSpeed;
     }
 
-    Vector2 ApplyVerticalMovement(bool JumpPressed, bool JumpHeld, Vector2 CurrentVector)
+    Vector2 ApplyVerticalVelocity(float velY, Vector2 CurrentVector)
     {
-        float speed = CalculateVerticalSpeed(JumpPressed, JumpHeld);
-        float distance = speed * Time.deltaTime;
+        float distance = velY * Time.deltaTime;
 
         Bounds bounds = boxCollider.bounds;
         RaycastHit2D hit = Physics2D.BoxCast(CurrentVector, bounds.size, 0f, new Vector2(0f, 1f), distance, environmentLayer);
@@ -121,14 +140,10 @@ public class PlayerMovementComponent : MonoBehaviour
         }
     }
 
-    Vector2 ApplyHorizontalMovement(float horizontalAxis, Vector2 CurrentVector)
+    Vector2 ApplyHorizontalVelocity(float velX, Vector2 CurrentVector)
     {
-        isFacingRight = horizontalAxis > 0f;
-        Vector3 currentScale = gameObject.transform.localScale;
-        gameObject.transform.localScale = new Vector3(horizontalAxis * Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
-
         Bounds bounds = boxCollider.bounds;
-        float distance = horizontalAxis * moveSpeed * Time.deltaTime;
+        float distance = velX * Time.deltaTime;
         RaycastHit2D hit = Physics2D.BoxCast(CurrentVector, bounds.size, 0f, new Vector2(1f, 0f), distance, environmentLayer);
 
         if (hit.transform == null)
@@ -143,27 +158,49 @@ public class PlayerMovementComponent : MonoBehaviour
         }
     }
 
+    Vector2 InputVerticalMovement(bool JumpPressed, bool JumpHeld, Vector2 CurrentVector)
+    {
+        float speed = CalculateVerticalSpeed(JumpPressed, JumpHeld);
+        return ApplyVerticalVelocity(speed, CurrentVector);
+    }
+
+    Vector2 InputHorizontalMovement(float horizontalAxis, Vector2 CurrentVector)
+    {
+        isFacingRight = horizontalAxis > 0f;
+        Vector3 currentScale = gameObject.transform.localScale;
+        gameObject.transform.localScale = new Vector3(horizontalAxis * Mathf.Abs(currentScale.x), currentScale.y, currentScale.z);
+
+        return ApplyHorizontalVelocity(horizontalAxis * moveSpeed, CurrentVector);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        // Input.GetAxisRaw("Vertical");
-        float horizontalAxis = Input.GetAxisRaw("Horizontal");
-        Vector2 NewPosition = boxCollider.transform.position;
-        if (Mathf.Abs(horizontalAxis) > controllerDeadzone)
+        Vector2 OutNewPosition = boxCollider.transform.position;
+
+        if (knockBackTimeRemaining > float.Epsilon)
         {
-            animator.SetBool("animWalking", true);
-            NewPosition = ApplyHorizontalMovement(Mathf.Sign(horizontalAxis), NewPosition);
+            OutNewPosition = UpdateKnockback(OutNewPosition);
+            hasJumped = false;
         }
         else
         {
-            animator.SetBool("animWalking", false);
+            float horizontalAxis = Input.GetAxisRaw("Horizontal");
+            if (Mathf.Abs(horizontalAxis) > controllerDeadzone)
+            {
+                animator.SetBool("animWalking", true);
+                OutNewPosition = InputHorizontalMovement(Mathf.Sign(horizontalAxis), OutNewPosition);
+            }
+            else
+            {
+                animator.SetBool("animWalking", false);
+            }
+
+            bool jumpButtionDown = Input.GetButtonDown("Jump");
+            bool jumpButtionHeld = Input.GetButton("Jump");
+            OutNewPosition = InputVerticalMovement(jumpButtionDown, jumpButtionHeld, OutNewPosition);
         }
 
-        bool jumpButtionDown = Input.GetButtonDown("Jump");
-        bool jumpButtionHeld = Input.GetButton("Jump");
-
-        NewPosition = ApplyVerticalMovement(jumpButtionDown, jumpButtionHeld, NewPosition);
-
-        transform.position = NewPosition;
+        transform.position = OutNewPosition;
     }
 }

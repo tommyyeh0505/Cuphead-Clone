@@ -28,9 +28,9 @@ public class BossHealthComponent : Damagable
         return health > float.Epsilon;
     }
 
-    public override void OnHit(float damage)
+    public override void OnHit(float damage, Vector2 direction)
     {
-        base.OnHit(damage);
+        base.OnHit(damage, direction);
 
         for (int i = 0; i < phaseThresholds.Count; ++i)
         {

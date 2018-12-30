@@ -12,7 +12,9 @@ public abstract class Damagable : MonoBehaviour
     {
     }
 
-    public virtual void OnHit(float damage)
+    // TODO: probably should replace parameters with some sort of 'context' GameObject (e.g. the bullet that hits you)
+    // then the class could take info from the context, instead of only damage and direction being considered
+    public virtual void OnHit(float damage, Vector2 direction)
     {
         health -= damage;
         if (health <= 0)

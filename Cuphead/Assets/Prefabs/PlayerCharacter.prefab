@@ -151,6 +151,9 @@ MonoBehaviour:
   jumpMinDuration: 0.15
   jumpPrelandingTimer: 0.15
   controllerDeadzone: 0.4
+  knockbackSpeed: 15
+  knockbackHeight: 0.5
+  knockbackTime: 0.2
   isFacingRight: 0
   environmentLayer:
     serializedVersion: 2
@@ -213,4 +216,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftBoundary: -30
   rightBoundary: 0
-  camera: {fileID: 8517116391595991831, guid: d3ee75d231bf8ac4486f1999c8638899, type: 3}
