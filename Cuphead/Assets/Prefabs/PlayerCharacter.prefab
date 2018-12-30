@@ -213,4 +213,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftBoundary: -30
   rightBoundary: 0
-  camera: {fileID: 0}
+  camera: {fileID: 8517116391595991831, guid: d3ee75d231bf8ac4486f1999c8638899, type: 3}
