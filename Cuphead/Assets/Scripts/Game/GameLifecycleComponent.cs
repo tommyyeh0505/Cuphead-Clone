@@ -36,7 +36,7 @@ public class GameLifecycleComponent : MonoBehaviour
                 gameOver = true;
                 gameOverTime.text = time.text;
                 gameOverUI.SetActive(true);
-                gameObject.GetComponent<GameOver>().SetHighScore(levelTime);
+                StartCoroutine(FetchDataCoroutine(levelTime));
             }
             else
             {
@@ -45,5 +45,11 @@ public class GameLifecycleComponent : MonoBehaviour
                 time.text = t.ToString("mm':'ss':'ff");
             }
         }
+    }
+
+    IEnumerator FetchDataCoroutine(float levelTime)
+    {
+        gameObject.GetComponent<GameOver>().SetHighScore(levelTime);
+        yield return null;
     }
 }

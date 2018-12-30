@@ -18,8 +18,9 @@ public class User : MonoBehaviour
             Debug.Log("Connecting to MySQL...");
             conn.Open();
 
-            string sql = "INSERT INTO Users (username) VALUES('" + username + "');\n" + "SELECT LAST_INSERT_ID(); ";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Users (username) VALUES(@username);\nSELECT LAST_INSERT_ID(); ", conn);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Prepare();
             MySqlDataReader rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {

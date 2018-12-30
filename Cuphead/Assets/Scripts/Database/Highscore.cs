@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Highscore : MonoBehaviour
-{   
+{
     //Connects to MySQL Database and Retrieves Score Data.
     //MYSQL user = Tommy/password
     public string GetPreviousClearTime(int userID, int levelID)
@@ -19,12 +19,15 @@ public class Highscore : MonoBehaviour
             Debug.Log("Connecting to MySQL...");
             conn.Open();
 
-            string sql = "SELECT clearTime FROM Score WHERE (USERID = " + userID + " AND LEVELID = " + levelID + ")";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT clearTime FROM Score WHERE (USERID = @userID AND LEVELID = @levelID)", conn);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@levelID", levelID);
+            cmd.Prepare();
+
             MySqlDataReader rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-                s += rdr[0]; 
+                s += rdr[0];
             }
             rdr.Close();
         }
@@ -50,8 +53,13 @@ public class Highscore : MonoBehaviour
             Console.WriteLine("Connecting to MySQL...");
             conn.Open();
 
-            string sql = "UPDATE Score SET clearTime = " + currentClearTime + " WHERE (userID = " + userID + " AND levelID = " + levelID + ")";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE Score SET clearTime = @clearTime WHERE (userID = @userID AND levelID = @levelID)", conn);
+            cmd.Parameters.AddWithValue("@clearTime", currentClearTime);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@levelID", levelID);
+            cmd.Prepare();
+
+
             MySqlDataReader rdr = cmd.ExecuteReader();
             rdr.Close();
         }
@@ -75,8 +83,13 @@ public class Highscore : MonoBehaviour
             Console.WriteLine("Connecting to MySQL...");
             conn.Open();
 
-            string sql = "INSERT INTO Score VALUES(" + userID + "," + levelID + ", " +currentClearTime +")";
+            string sql = "INSERT INTO Score VALUES(@userID, @levelID, @clearTime)";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@clearTime", currentClearTime);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@levelID", levelID);
+            cmd.Prepare();
+
             MySqlDataReader rdr = cmd.ExecuteReader();
             rdr.Close();
         }

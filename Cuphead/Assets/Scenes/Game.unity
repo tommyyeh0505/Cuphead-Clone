@@ -4966,6 +4966,10 @@ PrefabInstance:
       propertyPath: UIHealthText
       value: 
       objectReference: {fileID: 1979281026}
+    - target: {fileID: 684726765, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
+      propertyPath: health
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 890983043, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
       propertyPath: leftBoundary
       value: 0
