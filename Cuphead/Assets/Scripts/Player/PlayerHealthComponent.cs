@@ -18,14 +18,13 @@ public class PlayerHealthComponent : Damagable
 
     public override void OnHit(float damage)
     {
-        base.OnHit(damage);
-        UIHealthText.text = health.ToString("R");
-        if (gettingHit)
+        if (!gettingHit)
         {
-            StopCoroutine("HitFlash");
-        }
+            base.OnHit(damage);
+            UIHealthText.text = health.ToString("R");
 
-        StartCoroutine("HitFlash");
+            StartCoroutine("HitFlash");
+        }
     }
 
     private IEnumerator HitFlash()

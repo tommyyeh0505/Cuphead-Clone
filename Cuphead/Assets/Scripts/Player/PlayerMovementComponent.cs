@@ -9,6 +9,9 @@ public class PlayerMovementComponent : MonoBehaviour
     public float jumpMaxDuration; // time it takes to reach the apex
     public float jumpLingerTime; // time after jump apex to retain jumping logic (before going into falling logic)
     public float gravity; // parabolic falling coefficient
+    public float jumpMinDuration = 0.4f;
+
+    public float jumpPrelandingTimer = 0.2f;
 
     public float controllerDeadzone;
 
@@ -20,6 +23,7 @@ public class PlayerMovementComponent : MonoBehaviour
     [HideInInspector] private bool grounded;
     [HideInInspector] private float jumpSinWavePeriod;
     [HideInInspector] private float initialVerticalSpeed;
+    private float lastPressJumpTime;
 
     private BoxCollider2D boxCollider;
     private Animator animator;
@@ -47,19 +51,25 @@ public class PlayerMovementComponent : MonoBehaviour
 
     float CalculateVerticalSpeed(bool JumpDown, bool JumpHeld)
     {
+        if (JumpDown)
+        {
+            lastPressJumpTime = Time.time;
+        }
+
         // 3 situations:
         // 1. We are starting a jump. Only allow this if we are on the ground and if we issue a button down.
         // 2. We are free falling. Do this if we are not holding the jump button, or if jump time has expired, or if we never jumped to begin with, or if we have let go of the jump button
-        // 3. We are gaining altitude / lingering in the air after the apex of our jump, because jump button is held
-        if (grounded && JumpDown) // situation 1
+        // 3. We are gaining altitude / lingering in the air after the sapex of our jump, because jump button is held
+        if (grounded && (JumpDown || (Time.time - lastPressJumpTime < jumpPrelandingTimer))) // situation 1
         {
+            lastPressJumpTime = 0f;
             currentJumpDuration = 0f;
             verticalSpeed = initialVerticalSpeed;
             hasJumped = true;
             animator.SetBool("animJumpBool", hasJumped);
             animator.ResetTrigger("animFall");
         }
-        else if (!JumpHeld || !hasJumped || currentJumpDuration > jumpMaxDuration + jumpLingerTime) // situation 2
+        else if ((currentJumpDuration >= jumpMinDuration) && (!JumpHeld || !hasJumped || currentJumpDuration > jumpMaxDuration + jumpLingerTime)) // situation 2
         {
             // if we get in situation 2, we can never get out until we hit ground           
             animator.SetTrigger("animFall");
