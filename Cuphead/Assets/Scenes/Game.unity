@@ -4897,22 +4897,10 @@ PrefabInstance:
       propertyPath: UIHealthText
       value: 
       objectReference: {fileID: 1979281026}
-    - target: {fileID: 684726765, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: health
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: jumpPrelandingTimer
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: jumpMinDuration
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891285360, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
-      propertyPath: jumpLingerTime
-      value: 0.2
-      objectReference: {fileID: 0}
+    - target: {fileID: 890983043, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 347698466}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08241ad126f858841b00fdcfe0f24f8c, type: 3}
 --- !u!1001 &7470755117017394675

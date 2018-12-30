@@ -59,7 +59,7 @@ public class PlayerMovementComponent : MonoBehaviour
         // 3 situations:
         // 1. We are starting a jump. Only allow this if we are on the ground and if we issue a button down.
         // 2. We are free falling. Do this if we are not holding the jump button, or if jump time has expired, or if we never jumped to begin with, or if we have let go of the jump button
-        // 3. We are gaining altitude / lingering in the air after the sapex of our jump, because jump button is held
+        // 3. We are gaining altitude / lingering in the air after the apex of our jump, because jump button is held
         if (grounded && (JumpDown || (Time.time - lastPressJumpTime < jumpPrelandingTimer))) // situation 1
         {
             lastPressJumpTime = 0f;
