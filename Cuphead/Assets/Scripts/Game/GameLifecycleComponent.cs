@@ -8,15 +8,21 @@ public class GameLifecycleComponent : MonoBehaviour
 {
     private float initializationTime;
     float levelTime;
+    [SerializeField] GameObject boss; //used to check if player has died
     [SerializeField] GameObject player; //used to check if player has died
 
     //Game UI
     [SerializeField] TMP_Text time;
 
+    //StageClear Overlay UI
+    [SerializeField] GameObject stageClearUI;
+    [SerializeField] TMP_Text stageClearTime;
+
     //Gameover Overlay UI
     [SerializeField] GameObject gameOverUI;
     [SerializeField] TMP_Text gameOverTime;
-    [SerializeField] TMP_Text gameOverScore;
+
+
     Boolean gameOver;
 
     // Start is called before the first frame update
@@ -31,15 +37,22 @@ public class GameLifecycleComponent : MonoBehaviour
     {
         if (!gameOver)
         {
-            if (player == null)
+            if (boss == null)
             {
                 gameOver = true;
-                gameOverTime.text = time.text;
-                gameOverUI.SetActive(true);
+                stageClearTime.text = time.text;
+                stageClearUI.SetActive(true);
                 StartCoroutine(FetchDataCoroutine(levelTime));
             }
             else
             {
+                if(player == null)
+                {
+                    gameOver = true;
+                    gameOverTime.text = time.text;
+                    gameOverUI.SetActive(true);
+                }
+
                 levelTime = Time.timeSinceLevelLoad - initializationTime;
                 TimeSpan t = TimeSpan.FromSeconds(levelTime);
                 time.text = t.ToString("mm':'ss':'ff");
@@ -49,7 +62,7 @@ public class GameLifecycleComponent : MonoBehaviour
 
     IEnumerator FetchDataCoroutine(float levelTime)
     {
-        gameObject.GetComponent<GameOver>().SetHighScore(levelTime);
+        gameObject.GetComponent<GameClear>().SetHighScore(levelTime);
         yield return null;
     }
 }

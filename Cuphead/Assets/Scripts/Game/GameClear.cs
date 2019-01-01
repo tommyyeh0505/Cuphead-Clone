@@ -7,14 +7,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
 
-public class GameOver : MonoBehaviour
+public class GameClear : MonoBehaviour
 {
     [SerializeField] TMP_Text bestTimeText;
     [SerializeField] TMP_Text currentTimeText;
+    [SerializeField] TMP_Text leaderboardText;
 
     private float bestTime;
     private bool queryDone = false;
     private Highscore highScore;
+    private string topTenClearTimes;
 
     private void Start()
     {
@@ -25,6 +27,7 @@ public class GameOver : MonoBehaviour
     {
         if (queryDone)
         {
+            leaderboardText.text = topTenClearTimes;
             bestTimeText.text = SecondsToString(bestTime);
             queryDone = false;
         }
@@ -53,6 +56,7 @@ public class GameOver : MonoBehaviour
     // note: async-await does not work for this implementation of SQL, so we have to use a thread
     public void DoHighScoreQuery(float currentTime, int userID, int levelID)
     {
+        topTenClearTimes = highScore.GetTopTenClearTimes();
         string queryResult = highScore.GetPreviousClearTime(userID, levelID);
         string timeQuery = queryResult;
 
@@ -63,7 +67,7 @@ public class GameOver : MonoBehaviour
         else
         {
             float previousBestClearTime = float.Parse(timeQuery, CultureInfo.InvariantCulture.NumberFormat);
-            if (previousBestClearTime > currentTime)
+            if (previousBestClearTime < currentTime)
             {
                 bestTime = previousBestClearTime;
             }
