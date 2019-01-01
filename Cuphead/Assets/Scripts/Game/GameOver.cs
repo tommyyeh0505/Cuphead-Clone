@@ -5,12 +5,30 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class GameOver : MonoBehaviour
 {
-
     [SerializeField] TMP_Text bestTimeText;
     [SerializeField] TMP_Text currentTimeText;
+
+    private float bestTime;
+    private bool queryDone = false;
+    private Highscore highScore;
+
+    private void Start()
+    {
+        highScore = GetComponent<Highscore>();
+    }
+
+    private void Update()
+    {
+        if (queryDone)
+        {
+            bestTimeText.text = SecondsToString(bestTime);
+            queryDone = false;
+        }
+    }
 
     public void GoToMainMenu()
     {
@@ -24,20 +42,26 @@ public class GameOver : MonoBehaviour
 
     public void SetHighScore(float currentTime)
     {
-        float bestTime;
         int userID = PlayerPrefs.GetInt("USERID");
         int levelID = PlayerPrefs.GetInt("CURRENTLEVELID");
-        string timeQuery = gameObject.GetComponent<Highscore>().GetPreviousClearTime(userID, levelID);
+        currentTimeText.text = SecondsToString(currentTime);
+        Thread sqlThread = new Thread(() => DoHighScoreQuery(currentTime, userID, levelID));
+        sqlThread.Start();
+    }
+
+    // Runs on own thread because SQL
+    // note: async-await does not work for this implementation of SQL, so we have to use a thread
+    public void DoHighScoreQuery(float currentTime, int userID, int levelID)
+    {
+        string queryResult = highScore.GetPreviousClearTime(userID, levelID);
+        string timeQuery = queryResult;
+
         if (timeQuery == null || timeQuery == "")
         {
-
-            gameObject.GetComponent<Highscore>().InsertNewClearTime(userID, levelID, currentTime);
-            currentTimeText.text = SecondsToString(currentTime);
-            bestTimeText.text = SecondsToString(currentTime);
+            highScore.InsertNewClearTime(userID, levelID, currentTime);
         }
         else
         {
-
             float previousBestClearTime = float.Parse(timeQuery, CultureInfo.InvariantCulture.NumberFormat);
             if (previousBestClearTime > currentTime)
             {
@@ -46,14 +70,11 @@ public class GameOver : MonoBehaviour
             else
             {
                 bestTime = currentTime;
-                gameObject.GetComponent<Highscore>().UpdateClearTime(userID, levelID, bestTime);
+                highScore.UpdateClearTime(userID, levelID, bestTime);
             }
-
-            currentTimeText.text = SecondsToString(currentTime);
-            bestTimeText.text = SecondsToString(bestTime);
-
         }
 
+        queryDone = true;
     }
 
     public string SecondsToString(float time)
