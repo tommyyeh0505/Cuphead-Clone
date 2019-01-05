@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65c8948f70e15441ba90e13f4f9c087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 60
   timeToDespawn: 0
   UIHealthText: {fileID: 0}
 --- !u!114 &684726772
