@@ -24,7 +24,7 @@ public class MysqlConnector : MonoBehaviour
     //MYSQL user = Tommy/password
     public void Connect()
     {
-        string connStr = "Server=cuphead-clone.crjrjqa7nctn.us-east-2.rds.amazonaws.com;Port=3306;Database=CUPHEADCLONE;Uid=Tommy;Pwd=password";
+        string connStr = "Server=placeholder;Port=3306;Database=CUPHEADCLONE;Uid=Tommy;Pwd=password";
         MySqlConnection conn = new MySqlConnection(connStr);
         try
         {
